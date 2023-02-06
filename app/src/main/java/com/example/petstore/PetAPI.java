@@ -9,8 +9,8 @@ import retrofit2.http.GET;
 import retrofit2.http.Path;
 
 interface PetAPI {
-    @GET("pet/{petId}")
-    Call<List<Pet>> getPet(@Path("petId") int petId);
+    @GET("pet/1102")
+    Call<List<Pet>> getPet();
 
     Retrofit retrofit = new Retrofit.Builder()
             .baseUrl("https://petstore.swagger.io/v2/")
