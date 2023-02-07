@@ -2,14 +2,17 @@ package com.example.petstore;
 
 public class Pet {
     private String name;
-    private String photoUrls;
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public String getName() {
+        return name;
+    }
 
-    /*public String getPhoto() { return photoUrls; }
-    public void setPhoto(String photoUrls) { this.photoUrls = photoUrls; }*/
+    public void setName(String name) {
+        this.name = name;
+    }
 
     @Override
-    public String toString() { return name; }
+    public String toString() {
+        return "Имя питомца: " + name;
+    }
 }

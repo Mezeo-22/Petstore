@@ -21,6 +21,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView errorLog;
     private ProgressBar pBar;
+    private TextView petName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,22 +29,22 @@ public class MainActivity extends AppCompatActivity {
 
         errorLog = (TextView) findViewById(R.id.errorLog);
         pBar = (ProgressBar)findViewById(R.id.progressBar);
+        petName = (TextView) findViewById(R.id.petName);
+
         pBar.setVisibility(View.INVISIBLE);
-
         pBar.setVisibility(View.VISIBLE);
+
         PetAPI petAPI = PetAPI.retrofit.create(PetAPI.class);
+        Call<Pet> call = petAPI.getPet();
 
-        final Call<List<Pet>> call = petAPI.getPet();
-
-        call.enqueue(new Callback<List<Pet>>() {
+        call.enqueue(new Callback<Pet>() {
             @Override
-            public void onResponse(Call<List<Pet>> call, Response<List<Pet>> response) {
+            public void onResponse(Call<Pet> call, Response<Pet> response) {
                 if (response.isSuccessful()) {
-                    final TextView petName = (TextView) findViewById(R.id.petName);
-                    petName.setText(response.body().toString());
+                    Pet cutie = response.body();
+                    petName.setText(cutie.getName());
                     pBar.setVisibility(View.INVISIBLE);
                 } else {
-
                     ResponseBody errorBody = response.errorBody();
                     try {
                         Toast.makeText(MainActivity.this, errorBody.string(),
@@ -56,8 +57,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onFailure(Call<List<Pet>> call, Throwable t) {
-                errorLog.setText("fail");
+            public void onFailure(Call<Pet> call, Throwable t) {
+                errorLog.setText("Что-то пошло не так!");
                 pBar.setVisibility(View.INVISIBLE);
             }
         });
